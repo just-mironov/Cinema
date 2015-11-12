@@ -9,12 +9,16 @@
 <form method = "post" action = "/res">
 <input type="hidden" value="$id" name="id">
 #foreach ($r in $rows)
-<table>
+<table border=1>
     <tr>
     <td>${r.RowNum}</td>
 #foreach ($s in $r.seats)
     <td>
+    #if ($s == 0)
+        Занято
+    #else
         <input type="radio" name="seat" value="${r.RowNum},${s}">
+    #end
     </td>
 #end
     </tr>

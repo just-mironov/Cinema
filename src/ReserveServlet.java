@@ -23,11 +23,18 @@ public class ReserveServlet extends HttpServlet {
         data.put("id", id);
         ArrayList<Row> rows = new ArrayList<>();
         int[][] table = hall.getTable();
+        boolean[][] reserved = seanceById.getReserved();
         for (int i = 0; i < table.length; i++) {
             int[] row = table[i];
             ArrayList<Integer> seats = new ArrayList<>();
-            for (int seatNumber : row) {
-                seats.add(seatNumber);
+            for (int j = 0; j < row.length; j++) {
+                boolean resij = reserved[i][j];
+                if (!resij) {
+                    seats.add(0);
+                } else {
+                    int seatNumber = row[j];
+                    seats.add(seatNumber);
+                }
             }
             rows.add(new Row(i + 1, seats));
         }

@@ -15,9 +15,10 @@ public class ReserveServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         Map<String, Object> data = new HashMap<>();
         String id = req.getParameter("id");
-        Seance seanceById = TestServlet.my.findSeanceById(Integer.parseInt(id));
+        Cinema my = (Cinema) req.getServletContext().getAttribute("cinema");
+        Seance seanceById = my.findSeanceById(Integer.parseInt(id));
         int hallNumber = seanceById.getNumber();
-        Hall hall = TestServlet.my.getHall(hallNumber);
+        Hall hall = my.getHall(hallNumber);
 
         data.put("id", id);
         ArrayList<Row> rows = new ArrayList<>();
@@ -44,9 +45,10 @@ public class ReserveServlet extends HttpServlet {
         int row = Integer.parseInt(rowSeat.substring(0, p));
         int seat = Integer.parseInt(rowSeat.substring(p+1));
         String id = req.getParameter("id");
-        Seance seanceById = TestServlet.my.findSeanceById(Integer.parseInt(id));
+        Cinema my = (Cinema) req.getServletContext().getAttribute("cinema");
+        Seance seanceById = my.findSeanceById(Integer.parseInt(id));
         String message;
-        if (TestServlet.my.addReserve(seanceById, row, seat)) {
+        if (my.addReserve(seanceById, row, seat)) {
             message = "OK";
         } else {
             message = "Fail";
